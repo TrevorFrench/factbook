@@ -36,13 +36,15 @@ const Map: React.FC<MapProps> = ({ coordinates, countryName }) => {
 
 // Helper function to parse coordinates
 const parseCoordinates = (coordinates: string): [number, number] => {
-  // Assuming coordinates are in the format "28 00 N, 3 00 E"
-  const [latDegrees, latMinutes, latDirection, lonDegrees, lonMinutes, lonDirection] = coordinates.split(' ');
+    const cleanedCoordinates = coordinates.replace(/,/g, '');
+    const [latDegrees, latMinutes, latDirection, lonDegrees, lonMinutes, lonDirection] = cleanedCoordinates.split(' ');
+    
+    const lat = parseFloat(latDegrees) + parseFloat(latMinutes) / 60 
+    const lon = parseFloat(lonDegrees) + parseFloat(lonMinutes) / 60
+    const latitude = latDirection === 'N' ? lat : -lat;
+    const longitude = lonDirection === 'E' ? lon : -lon;
 
-  const latitude = parseFloat(latDegrees) + parseFloat(latMinutes) / 60 * (latDirection === 'S' ? -1 : 1);
-  const longitude = parseFloat(lonDegrees) + parseFloat(lonMinutes) / 60 * (lonDirection === 'W' ? -1 : 1);
-
-  return [latitude, longitude];
-};
+    return [latitude, longitude];
+  };
 
 export default Map;

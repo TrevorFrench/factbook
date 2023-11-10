@@ -11,17 +11,17 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ onSelectCountry, onSe
   const [countryCodes, setCountryCodes] = useState<string[]>([]);
 
   const regionToCountryCodes: { [key: string]: string[] } = {
-    "africa": ["NG", "ZA", "KE", "EG", "ag"],
-    "antarctica": ["IN", "JP", "CN", "KR"],
-    "australia-oceania": ["IN", "JP", "CN", "KR"],
-    "central-america-n-caribbean": ["IN", "JP", "CN", "KR"],
-    "central-asia": ["IN", "JP", "CN", "KR"],
-    "east-n-southeast-asia": ["IN", "JP", "CN", "KR"],
-    "europe": ["IN", "JP", "CN", "KR"],
-    "middle-east": ["IN", "JP", "CN", "KR"],
-    "north-america": ["IN", "JP", "CN", "KR"],
-    "oceans": ["IN", "JP", "CN", "KR"],
-    "south-america": ["IN", "JP", "CN", "KR"],
+    "africa": ["ag", "ao", "bc", "bn", "by", "cd", "cf", "cg", "cm", "cn", "ct", "cv", "dj", "eg", "ek", "er", "et", "ga", "gb", "gh", "gv", "iv", "ke", "li", "lt", "ly", "ma", "mi", "ml", "mo", "mp", "mr", "mz", "ng", "ni", "od", "pu", "rw", "se", "sf", "sg", "sh", "sl", "so", "su", "to", "tp", "ts", "tz", "ug", "uv", "wa", "wi", "wz", "za", "zi"],
+    "antarctica": ["ay", "bv", "fs", "hm"],
+    "australia-oceania": ["aq", "as", "at", "bp", "ck", "cq", "cr", "cw", "fj", "fm", "fp", "gq", "kr", "kt", "nc", "ne", "nf", "nh", "nr", "nz", "pc", "ps", "rm", "tl", "tn", "tv", "um", "wf", "wq", "ws"],
+    "central-america-n-caribbean": ["aa", "ac", "av", "bb", "bf", "bh", "bq", "cj", "cs", "cu", "do", "dr", "es", "gj", "gt", "ha", "ho", "jm", "mh", "nn", "nu", "pm", "rn", "rq", "sc", "st", "tb", "td", "tk", "uc", "vc", "vi", "vq"],
+    "central-asia": ["kg", "kz", "rs", "ti", "tx", "uz"],
+    "east-n-southeast-asia": ["b,", "bx", "cb", "ch", "hk", "id", "ja", "kn", "ks", "la", "mc", "mg", "my", "pf", "pg", "pp", "rp", "sn", "th", "tt", "tw", "vm"],
+    "europe": ["al", "an", "au", "ax", "be", "bk", "bo", "bu", "cy", "da", "dx", "ee", "ej", "en", "ez", "fi", "fo", "fr", "gi", "gk", "gm", "gr", "hr", "hu", "ic", "im", "it", "je", "jn", "kv", "lg", "lh", "lo", "ls", "lu", "md", "mj", "mk", "mn", "mt", "nl", "no", "pl", "po", "ri", "ro", "si", "sm", "sp", "sv", "sw", "sz", "uk", "up", "vt"],
+    "middle-east": ["ae", "aj", "am", "ba", "gg", "gz", "ir", "is", "iz", "jo", "ku", "le", "mu", "qa", "sa", "sy", "tu", "we", "ym"],
+    "north-america": ["bd", "ca", "gl", "ip", "mx", "sb", "us"],
+    "oceans": ["oo", "xo", "xq", "zh", "zn"],
+    "south-america": ["ar", "bl", "br", "ci", "co", "ec", "fk", "gy", "ns", "pa", "pe", "sx", "uy", "ve"],
     "south-asia": ["af", "bg", "bt", "ce", "in", "io", "mv", "np", "pk"],
     // Add more regions and country codes as needed
   };
