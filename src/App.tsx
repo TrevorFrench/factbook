@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// src/App.tsx
+import React, { useState } from 'react';
+import CountrySelector from './components/CountrySelector';
+import CountryInfo from './components/CountryInfo';
+import Map from './components/Map';
 
-function App() {
+const App: React.FC = () => {
+  // Assume there is a state for the selected country code
+  const [selectedCountry, setSelectedCountry] = React.useState<string>('');
+
+  // Handle the selection of a country
+  const handleCountrySelect = (selectedCountryCode: string) => {
+    setSelectedCountry(selectedCountryCode);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>World Factbook App</h1>
+      <CountrySelector onSelectCountry={handleCountrySelect} />
+      <CountryInfo countryCode={selectedCountry} />
+       {/* && <Map coordinates={countryData.Introduction?.Background?.text} countryData={Pass country data here} /> */}
+      {selectedCountry}
     </div>
   );
-}
+};
 
 export default App;
