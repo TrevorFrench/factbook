@@ -3,11 +3,28 @@ import React, { useState, useEffect } from 'react';
 
 interface CountrySelectorProps {
   onSelectCountry: (countryCode: string) => void;
+  onSelectRegion: (region: string) => void;
 }
 
-const CountrySelector: React.FC<CountrySelectorProps> = ({ onSelectCountry }) => {
+const CountrySelector: React.FC<CountrySelectorProps> = ({ onSelectCountry, onSelectRegion }) => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [countryCodes, setCountryCodes] = useState<string[]>([]);
+
+  const regionToCountryCodes: { [key: string]: string[] } = {
+    "africa": ["NG", "ZA", "KE", "EG", "ag"],
+    "antarctica": ["IN", "JP", "CN", "KR"],
+    "australia-oceania": ["IN", "JP", "CN", "KR"],
+    "central-america-n-caribbean": ["IN", "JP", "CN", "KR"],
+    "central-asia": ["IN", "JP", "CN", "KR"],
+    "east-n-southeast-asia": ["IN", "JP", "CN", "KR"],
+    "europe": ["IN", "JP", "CN", "KR"],
+    "middle-east": ["IN", "JP", "CN", "KR"],
+    "north-america": ["IN", "JP", "CN", "KR"],
+    "oceans": ["IN", "JP", "CN", "KR"],
+    "south-america": ["IN", "JP", "CN", "KR"],
+    "south-asia": ["af", "bg", "bt", "ce", "in", "io", "mv", "np", "pk"],
+    // Add more regions and country codes as needed
+  };
 
   useEffect(() => {
     // Implement logic to get country codes based on the selected region
@@ -16,16 +33,12 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ onSelectCountry }) =>
     // Then, set the country codes based on the selected region.
     // Replace this with your actual implementation.
 
-    const regionToCountryCodes: { [key: string]: string[] } = {
-      "Africa": ["NG", "ZA", "KE", "EG", "ag"],
-      "Asia": ["IN", "JP", "CN", "KR"],
-      // Add more regions and country codes as needed
-    };
-
     setCountryCodes(regionToCountryCodes[selectedRegion || ""] || []);
   }, [selectedRegion]);
 
   const handleRegionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedRegion = event.target.value;
+    onSelectRegion(selectedRegion);
     setSelectedRegion(event.target.value);
   };
 
@@ -39,9 +52,11 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ onSelectCountry }) =>
         <label>Select Region: </label>
         <select onChange={handleRegionChange} value={selectedRegion || ''}>
           <option value="">-- Select Region --</option>
-          <option value="Africa">Africa</option>
-          <option value="Asia">Asia</option>
-          {/* Add more regions as needed */}
+          {Object.keys(regionToCountryCodes).map((region) => (
+            <option key={region} value={region}>
+              {region}
+            </option>
+          ))}
         </select>
       </div>
 

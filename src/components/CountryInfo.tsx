@@ -5,15 +5,16 @@ import Map from './Map';
 
 interface CountryInfoProps {
   countryCode: string;
+  region: string | null;
 }
 
-const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode }) => {
+const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode, region }) => {
   const [countryData, setCountryData] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://raw.githubusercontent.com/factbook/factbook.json/master/africa/${countryCode}.json`);
+        const response = await axios.get(`https://raw.githubusercontent.com/factbook/factbook.json/master/${region}/${countryCode}.json`);
         setCountryData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);

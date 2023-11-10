@@ -1,8 +1,7 @@
 // src/components/Map.tsx
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { LatLngExpression, LatLngBoundsExpression } from 'leaflet';
-
+import { LatLngExpression, LatLngBoundsExpression, Map as LeafletMap } from 'leaflet';
 interface MapProps {
   coordinates: string;
   countryName: string;
@@ -11,12 +10,21 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({ coordinates, countryName }) => {
   const [latitude, longitude] = parseCoordinates(coordinates);
   const position: LatLngExpression = [latitude, longitude];
-  const bounds: LatLngBoundsExpression = [position, position]; // Set initial bounds to the selected country
+  const bounds: LatLngBoundsExpression = [position, position];
+  const mapRef = useRef<LeafletMap | null>(null);
+
+  useEffect(() => {
+    // Center the map on the marker when the coordinates change
+    if (mapRef.current) {
+      mapRef.current.setView(position);
+    }
+  }, [coordinates]);
 
   return (
-    <MapContainer center={position} zoom={7} style={{ height: '100%', width: '100%' }}>
+    <MapContainer ref={mapRef} center={position} zoom={7} style={{ height: '100%', width: '100%' }}>
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        //url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       <Marker position={position}>
