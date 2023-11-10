@@ -47,8 +47,11 @@ const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode, region }) => {
   };
 
   return (
+    
     <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ overflowY: 'auto', flex: 1, paddingRight: '10px' }}>
+        
+      <div className="info" style={{ overflowY: 'auto', flex: 1, padding: '10px' }}>
+      {!countryData && <p>Select a region/country code to see information.</p>}
         {countryData && (
           Object.keys(countryData).map((category) => (
             <div key={category}>
@@ -57,7 +60,6 @@ const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode, region }) => {
             </div>
           ))
         )}
-        {!countryData && <p>Select a country to see information.</p>}
       </div>
 
       {countryData && (

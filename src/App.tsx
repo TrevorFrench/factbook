@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <h1>World Factbook App</h1>
+      {/* <h1>World Factbook App</h1> */}
       <CountrySelector onSelectCountry={handleCountrySelect} onSelectRegion={handleRegionSelect} />
       <CountryInfo countryCode={selectedCountry} region={selectedRegion} />
        {/* && <Map coordinates={countryData.Introduction?.Background?.text} countryData={Pass country data here} /> */}

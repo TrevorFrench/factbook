@@ -48,29 +48,36 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({ onSelectCountry, onSe
 
   return (
     <div>
-      <div>
-        <label>Select Region: </label>
-        <select onChange={handleRegionChange} value={selectedRegion || ''}>
-          <option value="">-- Select Region --</option>
-          {Object.keys(regionToCountryCodes).map((region) => (
-            <option key={region} value={region}>
-              {region}
-            </option>
-          ))}
-        </select>
-      </div>
+        <section className="container">
+            <h2>Region:</h2>
+            <div className="dropdown dropdown-dark">
+                {/* <label>Select Region: </label> */}
+                <select name="region" className="dropdown-select" onChange={handleRegionChange} value={selectedRegion || ''}>
+                <option value="">-- Select Region --</option>
+                {Object.keys(regionToCountryCodes).map((region) => (
+                    <option key={region} value={region}>
+                    {region}
+                    </option>
+                ))}
+                </select>
+            </div>
+        </section>
 
       {selectedRegion && (
         <div>
-          <h3>Available Country Codes:</h3>
-          <select onChange={handleCountryChange}>
-            <option value="">-- Select Country --</option>
-            {countryCodes.map((code) => (
-              <option key={code} value={code}>
-                {code}
-              </option>
-            ))}
-          </select>
+            <section className="container">
+            <h2>Country Code:</h2>
+                <div className="dropdown dropdown-dark">
+                    <select name="country" className="dropdown-select" onChange={handleCountryChange}>
+                        <option value="">-- Select Country --</option>
+                        {countryCodes.map((code) => (
+                        <option key={code} value={code}>
+                            {code}
+                        </option>
+                        ))}
+                    </select>
+                </div>
+            </section>
         </div>
       )}
     </div>
