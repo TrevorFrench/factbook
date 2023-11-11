@@ -10,18 +10,26 @@ interface CountryInfoProps {
 
 const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode, region }) => {
   const [countryData, setCountryData] = useState<any>(null);
+  const [categoryVisibility, setCategoryVisibility] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`https://raw.githubusercontent.com/factbook/factbook.json/master/${region}/${countryCode}.json`);
         setCountryData(response.data);
+  
+        // Initialize categoryVisibility state with default visibility (e.g., false for all categories)
+        const initialVisibility: { [key: string]: boolean } = {};
+        Object.keys(response.data).forEach(category => {
+          initialVisibility[category] = false;
+        });
+        setCategoryVisibility(initialVisibility);
       } catch (error) {
         console.error('Error fetching data:', error);
         setCountryData(null);
       }
     };
-
+  
     if (countryCode) {
       fetchData();
     }
@@ -33,11 +41,12 @@ const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode, region }) => {
         <div>
           {Object.keys(data).map((key) => (
             <div key={key}>
-              {key !== 'text' && <h3>{key}</h3>}
+              <h3>
+                {key}
+              </h3>
               {data[key] && data[key].text && (
                 <div dangerouslySetInnerHTML={{ __html: data[key].text }} />
               )}
-              {/* {renderContent(data[key])} */}
             </div>
           ))}
         </div>
@@ -46,17 +55,24 @@ const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode, region }) => {
     return <p>{data || 'No information available'}</p>;
   };
 
+  const toggleCategoryVisibility = (category: string) => {
+    setCategoryVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [category]: !prevVisibility[category],
+    }));
+  };
+
   return (
     
     <div style={{ display: 'flex', height: '100vh' }}>
-        
       <div className="info" style={{ overflowY: 'auto', flex: 1, padding: '10px' }}>
-      {!countryData && <p>Select a region/country code to see information.</p>}
+        {!countryData && <p>Select a region/country code to see information.</p>}
         {countryData && (
           Object.keys(countryData).map((category) => (
             <div key={category}>
-              <h2>{category}</h2>
-              {renderContent(countryData[category])}
+              <h2 onClick={() => toggleCategoryVisibility(category)} style={{ cursor: 'pointer' }}
+              className={categoryVisibility[category] ? 'active' : ''}>{category}</h2>
+              {categoryVisibility[category] && renderContent(countryData[category])}
             </div>
           ))
         )}
@@ -64,7 +80,8 @@ const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode, region }) => {
 
       {countryData && (
         <div style={{ overflowY: 'auto', flex: 1 }}>
-          <Map coordinates={countryData?.Geography?.["Geographic coordinates"]?.text} countryName={countryData?.Introduction?.Background?.text} />
+          <Map coordinates={countryData?.Geography?.["Geographic coordinates"]?.text} 
+                countryLocation={countryData?.Geography?.Location?.text} />
         </div>
       )}
     </div>

@@ -4,10 +4,10 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { LatLngExpression, LatLngBoundsExpression, Map as LeafletMap } from 'leaflet';
 interface MapProps {
   coordinates: string;
-  countryName: string;
+  countryLocation: string;
 }
 
-const Map: React.FC<MapProps> = ({ coordinates, countryName }) => {
+const Map: React.FC<MapProps> = ({ coordinates, countryLocation }) => {
   const [latitude, longitude] = parseCoordinates(coordinates);
   const position: LatLngExpression = [latitude, longitude];
   const bounds: LatLngBoundsExpression = [position, position];
@@ -28,7 +28,12 @@ const Map: React.FC<MapProps> = ({ coordinates, countryName }) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       <Marker position={position}>
-        <Popup>{countryName}</Popup>
+        <Popup>
+            <b>LOCATION:</b> {countryLocation}
+            <br></br>
+            <br></br>
+            <b>COORDINATES:</b> {coordinates}
+        </Popup>
       </Marker>
     </MapContainer>
   );
