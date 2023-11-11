@@ -71,7 +71,7 @@ const CountryInfo: React.FC<CountryInfoProps> = ({ countryCode, region }) => {
           Object.keys(countryData).map((category) => (
             <div key={category}>
               <h2 onClick={() => toggleCategoryVisibility(category)} style={{ cursor: 'pointer' }}
-              className={categoryVisibility[category] ? 'active' : ''}>{category}</h2>
+              className={categoryVisibility[category] ? 'active' : ''} id='header'>{category}</h2>
               {categoryVisibility[category] && renderContent(countryData[category])}
             </div>
           ))
